@@ -1,0 +1,39 @@
+service: cloudaxes
+frameworkVersion: '3'
+useDotenv: true
+
+custom:
+  serverlessPluginTypescript:
+    tsConfigFileLocation: tsconfig.build.json
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  timeout: 10 # default is 6
+  profile: cloudaxesServerless
+  # region: eu-central-1
+  environment:
+    ADMIN_API_KEY: ${env:ADMIN_API_KEY}
+    USER_POOL_ID: !Ref CognitoUserPool
+    USER_POOL_ARN: !GetAtt CognitoUserPool.Arn
+    USER_POOL_CLIENT_ID: !Ref CognitoUserPoolClient
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - ec2:DescribeInstances
+          Resource: '*'
+
+functions:
+  trpc:
+    name: ${self:service}-trpc-${sls:stage}
+    handler: src/index.handler
+    events:
+      - httpApi: GET /trpc/{proxy+}
+      - httpApi: POST /trpc/{proxy+}
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-tscpaths
+  - serverless-offline

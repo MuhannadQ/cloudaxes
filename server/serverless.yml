@@ -14,8 +14,8 @@ provider:
   name: aws
   runtime: nodejs18.x
   timeout: 10 # default is 6
-  profile: cloudaxesServerless
-  # region: eu-central-1
+  profile: ${opt:aws-profile, env:AWS_PROFILE, "default"}
+  region: ${opt:region, env:REGION}
   environment:
     ADMIN_API_KEY: ${env:ADMIN_API_KEY}
     USER_POOL_ID: !Ref CognitoUserPool

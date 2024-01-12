@@ -17,10 +17,11 @@ provider:
   profile: ${opt:aws-profile, env:AWS_PROFILE, "default"}
   region: ${opt:region, env:REGION}
   environment:
+    REGION: ${opt:region, env:REGION}
     ADMIN_API_KEY: ${env:ADMIN_API_KEY}
-    USER_POOL_ID: !Ref CognitoUserPool
-    USER_POOL_ARN: !GetAtt CognitoUserPool.Arn
-    USER_POOL_CLIENT_ID: !Ref CognitoUserPoolClient
+    # USER_POOL_ID: !Ref CognitoUserPool
+    # USER_POOL_ARN: !GetAtt CognitoUserPool.Arn
+    # USER_POOL_CLIENT_ID: !Ref CognitoUserPoolClient
   iam:
     role:
       statements:
@@ -38,7 +39,7 @@ functions:
       - httpApi: POST /trpc/{proxy+}
 
 resources:
-  - ${file(resources/cognito_user_pool.yml)}
+  # - ${file(resources/cognito_user_pool.yml)}
   - ${file(resources/s3.yml)}
   - ${file(resources/cloudfront.yml)}
 

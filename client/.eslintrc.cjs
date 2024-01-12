@@ -4,15 +4,20 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:tailwindcss/recommended',
     'plugin:react-hooks/recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'src/components/ui'],
   parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
+  plugins: ['tailwindcss', 'react-refresh'],
+  settings: {
+    tailwindcss: {
+      config: 'tailwind.config.cjs',
+      callees: ['cn', 'cva'], // default values: ["classnames", "clsx", "ctl"]
+    },
+  },
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+    '@typescript-eslint/no-unused-vars': 'warn',
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
   },
 }

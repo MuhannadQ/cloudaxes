@@ -7,8 +7,8 @@
     "start:func": "serverless invoke local --function trpc",
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "tsc -w --noEmit",
-    "lint": "eslint . --ignore-path .gitignore --ext .ts",
-    "lint:fix": "eslint . --ignore-path .gitignore --ext .ts --fix",
+    "lint": "eslint . --ext ts",
+    "lint:fix": "eslint . --ext .ts --fix",
     "deploy": "serverless deploy"
   },
   "devDependencies": {

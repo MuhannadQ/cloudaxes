@@ -3,6 +3,10 @@ frameworkVersion: '3'
 useDotenv: true
 
 custom:
+  appBucketName: ${self:service}-app-${sls:stage}
+  s3Sync:
+    - bucketName: ${self:custom.appBucketName}
+      localDir: client/build/
   serverlessPluginTypescript:
     tsConfigFileLocation: tsconfig.build.json
 
@@ -33,7 +37,13 @@ functions:
       - httpApi: GET /trpc/{proxy+}
       - httpApi: POST /trpc/{proxy+}
 
+resources:
+  - ${file(resources/cognito_user_pool.yml)}
+  - ${file(resources/s3.yml)}
+  - ${file(resources/cloudfront.yml)}
+
 plugins:
+  - serverless-s3-sync
   - serverless-plugin-typescript
   - serverless-tscpaths
   - serverless-offline

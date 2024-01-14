@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import UserAuthForm from './AuthForm'
 
-export function AuthPage() {
+export default function AuthPage() {
   return (
     <div className="container grid h-full flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">

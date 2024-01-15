@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-ec2": "^3.489.0",
-    "@trpc/server": "^10.38.0",
+    "@trpc/server": "^11.0.0-next-beta.193",
     "zod": "^3.22.2"
   }
 }

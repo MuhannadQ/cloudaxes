@@ -1,13 +1,13 @@
 import type { APIGatewayProxyEventV2 } from 'aws-lambda'
 import type { CreateAWSLambdaContextOptions } from '@trpc/server/adapters/aws-lambda'
 
-interface Session {
+export interface ISession {
   user: {
     id: string
   }
 }
 
-export type Context = { session: Session | null }
+export type Context = { session: ISession | null }
 
 // created for each request
 export const createContext = async ({
@@ -19,7 +19,7 @@ export const createContext = async ({
   }
 }
 interface CreateContextOptions {
-  session: Session | null
+  session: ISession | null
 }
 
 export async function createContextInner(_opts: CreateContextOptions) {

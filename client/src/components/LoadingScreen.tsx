@@ -3,8 +3,8 @@ import { Progress } from '@/components/ui/progress'
 import { useAuth } from '@/hooks/useAuth'
 
 export default function LoadingScreen() {
-  const { isLoading } = useAuth()
   const [progress, setProgress] = useState(13)
+  const { isLoading } = useAuth()
 
   useEffect(() => {
     const timer1 = setTimeout(() => setProgress(33), 500)

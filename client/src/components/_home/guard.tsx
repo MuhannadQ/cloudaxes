@@ -4,7 +4,10 @@ import HomeLayout from '@/components/_home/layout'
 
 export default function HomeRoutesGuard() {
   const { isAuthenticated, isLoading } = useAuth()
-  if (isLoading) throw new Promise((resolve) => setTimeout(resolve, 1000))
+  if (isLoading) {
+    console.log('Still loading...🕳')
+    throw new Promise((resolve) => setTimeout(resolve, 500))
+  }
   return isAuthenticated ? (
     <HomeLayout>
       <Outlet />

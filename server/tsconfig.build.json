@@ -9,6 +9,9 @@
     "outDir": ".build",
     "sourceMap": true,
     "preserveConstEnums": true,
+    "composite": true, // for referencing from client to work
+    "declaration": true, // this defaults to true when composite is true
+
     "baseUrl": "./",
     "paths": {
       "src/*": ["src/*"]

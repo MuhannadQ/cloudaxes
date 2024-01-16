@@ -5,8 +5,8 @@ Resources:
       UserPoolName: ${self:service}-user-pool-${sls:stage}
       AdminCreateUserConfig:
         AllowAdminCreateUserOnly: true
-      UsernameAttributes:
-        - email
+        # InviteMessageTemplate: _
+      AliasAttributes:
         - preferred_username
       Policies:
         PasswordPolicy:
@@ -22,4 +22,6 @@ Resources:
       UserPoolId: !Ref CognitoUserPool
       ExplicitAuthFlows:
         - ADMIN_NO_SRP_AUTH
+      # AccessTokenValidity: 5
+      # IdTokenValidity: 5
       GenerateSecret: false

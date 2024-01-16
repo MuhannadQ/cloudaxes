@@ -5,14 +5,16 @@
     "test": "vitest",
     "dev": "serverless offline",
     "start:func": "serverless invoke local --function trpc",
-    "typecheck": "tsc --noEmit",
-    "typecheck:watch": "tsc -w --noEmit",
+    "ts:check": "tsc --noEmit",
     "lint": "eslint . --ext ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "deploy": "serverless deploy"
+    "build:client": "npm run --prefix ../client build",
+    "sync:client": "serverless s3sync",
+    "deploy:server": "serverless deploy --nos3sync",
+    "deploy:client": "npm run build:client && npm run sync:client",
+    "deploy": "npm run build:client && serverless deploy"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.3.1",
     "@types/aws-lambda": "^8.10.119",
     "@typescript-eslint/eslint-plugin": "^6.13.1",
     "@typescript-eslint/parser": "^6.13.1",
@@ -29,6 +31,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-ec2": "^3.489.0",
+    "@faker-js/faker": "^8.3.1",
     "@trpc/server": "^11.0.0-next-beta.193",
     "zod": "^3.22.2"
   }

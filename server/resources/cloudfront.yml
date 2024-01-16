@@ -3,16 +3,13 @@ Resources:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
-        # Aliases:
-        #   - cloudaxes.hashtag.dev
         Origins:
           - Id: AppOrigin
-            DomainName: !GetAtt AppBucket.RegionalDomainName # for website origin we need regional I think
-            # DomainName: <bucket-name>.s3-website.<region>.amazonaws.com
+            DomainName: !GetAtt AppBucket.RegionalDomainName # for website origin we need the regional domain name # <bucket-name>.s3.<region>.amazonaws.com
             CustomOriginConfig:
               HTTPPort: 80
               HTTPSPort: 443
-              OriginProtocolPolicy: http-only # TODO: Do I need https-only?
+              OriginProtocolPolicy: http-only # Do I need https-only?
         DefaultCacheBehavior:
           TargetOriginId: AppOrigin
           ForwardedValues:
@@ -24,6 +21,14 @@ Resources:
           - ErrorCode: 404
             ResponseCode: 200
             ResponsePagePath: /index.html
-        ViewerCertificate:
-          CloudFrontDefaultCertificate: true
+        Aliases: !If
+          - HasCloudFrontDnsAlias
+          - - ${self:custom.domainName}
+          - !Ref AWS::NoValue
+        ViewerCertificate: !If
+          - HasCloudFrontDnsAlias
+          - AcmCertificateArn: ${self:custom.certificateArn}
+            SslSupportMethod: sni-only
+            # MinimumProtocolVersion: _ # I didn't set this, it defaulted to TLSv1
+          - CloudFrontDefaultCertificate: true
         Enabled: true

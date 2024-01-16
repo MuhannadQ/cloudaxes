@@ -3,25 +3,32 @@ frameworkVersion: '3'
 useDotenv: true
 
 custom:
+  serverlessPluginTypescript:
+    tsConfigFileLocation: tsconfig.build.json
+
   appBucketName: ${self:service}-app-${sls:stage}
   s3Sync:
     - bucketName: ${self:custom.appBucketName}
-      localDir: client/build/
-  serverlessPluginTypescript:
-    tsConfigFileLocation: tsconfig.build.json
+      localDir: ../client/dist
+
+  certificateArn: ${env:CERTIFICATE_ARN, ''}
+  domainName: ${env:DOMAIN_NAME, ''}
 
 provider:
   name: aws
   runtime: nodejs18.x
-  timeout: 10 # default is 6
-  profile: ${opt:aws-profile, env:AWS_PROFILE, "default"}
+  timeout: 15 # default is 6
+  profile: ${opt:aws-profile, env:AWS_PROFILE, 'default'}
   region: ${opt:region, env:REGION}
   environment:
+    NODE_ENV: ${env:NODE_ENV, 'development'}
     REGION: ${opt:region, env:REGION}
     ADMIN_API_KEY: ${env:ADMIN_API_KEY}
-    # USER_POOL_ID: !Ref CognitoUserPool
-    # USER_POOL_ARN: !GetAtt CognitoUserPool.Arn
-    # USER_POOL_CLIENT_ID: !Ref CognitoUserPoolClient
+    USER_POOL_ID: !Ref CognitoUserPool
+    USER_POOL_ARN: !GetAtt CognitoUserPool.Arn
+    USER_POOL_CLIENT_ID: !Ref CognitoUserPoolClient
+  httpApi:
+    cors: true
   iam:
     role:
       statements:
@@ -39,7 +46,12 @@ functions:
       - httpApi: POST /trpc/{proxy+}
 
 resources:
-  # - ${file(resources/cognito_user_pool.yml)}
+  - Conditions:
+      HasCloudFrontDnsAlias: !Not
+        - !Equals
+          - ${self:custom.certificateArn, ''}
+          - ''
+  - ${file(resources/cognito_user_pool.yml)}
   - ${file(resources/s3.yml)}
   - ${file(resources/cloudfront.yml)}
 

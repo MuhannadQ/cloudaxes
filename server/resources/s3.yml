@@ -1,7 +1,4 @@
 Resources:
-  # https://repost.aws/knowledge-center/cloudfront-https-requests-s3
-  # https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html
-  # https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/getting-started-secure-static-website-cloudformation-template.html
   AppBucket:
     Type: AWS::S3::Bucket
     Properties:

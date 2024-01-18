@@ -11,7 +11,7 @@ custom:
     - bucketName: ${self:custom.appBucketName}
       localDir: ../client/dist
 
-  certificateArn: ${env:CERTIFICATE_ARN, ''}
+  certificateArn: ${env:ACM_CERTIFICATE_ARN, ''}
   domainName: ${env:DOMAIN_NAME, ''}
 
 provider:
@@ -20,15 +20,20 @@ provider:
   timeout: 15 # default is 6
   profile: ${opt:aws-profile, env:AWS_PROFILE, 'default'}
   region: ${opt:region, env:REGION}
+  stage: ${opt:stage, env:STAGE, 'dev'}
   environment:
-    NODE_ENV: ${env:NODE_ENV, 'development'}
-    REGION: ${opt:region, env:REGION}
-    ADMIN_API_KEY: ${env:ADMIN_API_KEY}
-    USER_POOL_ID: !Ref CognitoUserPool
-    USER_POOL_ARN: !GetAtt CognitoUserPool.Arn
-    USER_POOL_CLIENT_ID: !Ref CognitoUserPoolClient
+    NODE_ENV: ${sls:stage}
+    REGION: ${aws:region}
   httpApi:
     cors: true
+    authorizers:
+      jwtCognitoAuthorizer:
+        type: jwt
+        identitySource: $request.header.Authorization
+        issuerUrl: !GetAtt CognitoUserPool.ProviderURL
+        audience:
+          - !Ref CognitoUserPoolClient
+
   iam:
     role:
       statements:
@@ -42,8 +47,16 @@ functions:
     name: ${self:service}-trpc-${sls:stage}
     handler: src/index.handler
     events:
-      - httpApi: GET /trpc/{proxy+}
-      - httpApi: POST /trpc/{proxy+}
+      - httpApi:
+          method: GET
+          path: /trpc/{proxy+}
+          authorizer:
+            name: jwtCognitoAuthorizer
+      - httpApi:
+          method: POST
+          path: /trpc/{proxy+}
+          authorizer:
+            name: jwtCognitoAuthorizer
 
 resources:
   - Conditions:

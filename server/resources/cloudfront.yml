@@ -3,9 +3,10 @@ Resources:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
+        Enabled: true
         Origins:
           - Id: AppOrigin
-            DomainName: !GetAtt AppBucket.RegionalDomainName # for website origin we need the regional domain name # <bucket-name>.s3.<region>.amazonaws.com
+            DomainName: !Select [1, !Split ['//', !GetAtt AppBucket.WebsiteURL]] # removes the http:// part
             CustomOriginConfig:
               HTTPPort: 80
               HTTPSPort: 443
@@ -31,4 +32,3 @@ Resources:
             SslSupportMethod: sni-only
             # MinimumProtocolVersion: _ # I didn't set this, it defaulted to TLSv1
           - CloudFrontDefaultCertificate: true
-        Enabled: true

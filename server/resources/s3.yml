@@ -10,7 +10,7 @@ Resources:
         RestrictPublicBuckets: false
       WebsiteConfiguration:
         IndexDocument: index.html
-        ErrorDocument: error.html
+        # ErrorDocument: error.html
 
   AppAccessPolicy:
     Type: AWS::S3::BucketPolicy
@@ -24,3 +24,9 @@ Resources:
             Action:
               - s3:GetObject
             Resource: arn:aws:s3:::${self:custom.appBucketName}/*
+
+Outputs:
+  AppBucketName:
+    Value: !Ref AppBucket
+  AppBucketWebsiteURL:
+    Value: !GetAtt AppBucket.WebsiteURL

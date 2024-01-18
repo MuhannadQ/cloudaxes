@@ -1,15 +1,16 @@
 import { NavLink } from 'react-router-dom'
 import { cn } from '@/lib/utils'
-import UserNav from '@/components/UserNav'
 import { Input } from '@/components/ui/input'
+import UserNav from '@/components/UserNav'
+import Icons from '@/components/Icons'
 import { pages } from '@/data/site'
 
 export default function Header() {
   return (
     <div className="fixed top-0 z-50 w-full border-b bg-background shadow-sm">
-      <header className="container flex h-16 items-center px-4">
-        {/* <TeamSwitcher /> */}
-        <MainNav className="mx-6" />
+      <header className="container flex h-16 items-center gap-6 px-4 md:gap-10">
+        <Icons.logo />
+        <MainNav />
         <div className="ml-auto flex items-center space-x-4">
           <Search />
           <UserNav />

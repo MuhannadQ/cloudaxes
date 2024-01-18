@@ -116,22 +116,32 @@ export const skeletonColumns: ColumnDef<Task>[] = [
   },
   {
     ...columns[1],
-    cell: () => <Skeleton className="h-5 w-20" />,
+    cell: () => <Skeleton className="my-1.5 h-5 w-20" />,
   },
   {
     ...columns[2],
-    cell: () => <Skeleton className="h-5 w-48" />,
+    cell: () => <Skeleton className="my-1.5 h-5 w-48" />,
   },
   {
     ...columns[3],
-    cell: () => <Skeleton className="h-5 w-20" />,
+    cell: () => (
+      <div className="my-1.5 flex space-x-2">
+        <Skeleton className="h-5 w-5 rounded-full" />
+        <Skeleton className="h-5 w-20" />
+      </div>
+    ),
   },
   {
     ...columns[4],
-    cell: () => <Skeleton className="h-5 w-20" />,
+    cell: () => (
+      <div className="my-1.5 flex space-x-2">
+        <Skeleton className="h-5 w-5" />
+        <Skeleton className="h-5 w-20" />
+      </div>
+    ),
   },
   {
     ...columns[5],
-    cell: () => <DotsHorizontalIcon className="h-4 w-4" />,
+    cell: () => <DotsHorizontalIcon className="my-2 h-4 w-4" />,
   },
 ]

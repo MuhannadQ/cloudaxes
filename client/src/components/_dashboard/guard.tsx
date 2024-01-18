@@ -1,17 +1,17 @@
 import { Outlet, Navigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
-import HomeLayout from '@/components/_home/layout'
+import DashboardLayout from './layout'
 
-export default function HomeRoutesGuard() {
+export default function DashboardRoutesGuard() {
   const { isAuthenticated, isLoading } = useAuth()
   if (isLoading) {
     console.log('Still loading...🕳')
     throw new Promise((resolve) => setTimeout(resolve, 500))
   }
   return isAuthenticated ? (
-    <HomeLayout>
+    <DashboardLayout>
       <Outlet />
-    </HomeLayout>
+    </DashboardLayout>
   ) : (
     <Navigate to="/login" />
   )

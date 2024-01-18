@@ -1,11 +1,11 @@
 import Header from '@/components/Header'
 import SiteFooter from '@/components/Footer'
 
-type HomeLayoutProps = {
+type DashboardLayoutProps = {
   children: React.ReactNode
 }
 
-export default function HomeLayout({ children }: HomeLayoutProps) {
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <>
       <Blank />

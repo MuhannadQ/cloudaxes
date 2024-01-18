@@ -20,7 +20,7 @@ export default function LoadingScreen() {
   }, [])
 
   return (
-    <div className="flex h-full items-center justify-center">
+    <div className="flex h-screen items-center justify-center">
       <Progress value={isLoading ? progress : 100} className="w-1/3" />
     </div>
   )

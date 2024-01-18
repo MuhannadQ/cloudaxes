@@ -9,20 +9,13 @@ export default function Footer({ className }: React.HTMLAttributes<HTMLElement>)
     <footer className={cn(className)}>
       <div className="container flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0">
         <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-          <Icons.logo className="h-6 w-6" />
+          <Icons.axes className="h-6 w-6" />
           <p className="text-center text-sm leading-loose md:text-left">
             Built by{' '}
+            
+            <span className="font-medium underline underline-offset-4">MuhannadQ</span>. Hosted on{' '}
             <a
-              href={siteConfig.links.twitter}
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium underline underline-offset-4"
-            >
-              MuhannadQ
-            </a>
-            . Hosted on{' '}
-            <a
-              href="https://vercel.com"
+              href="https://aws.amazon.com"
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
@@ -31,7 +24,7 @@ export default function Footer({ className }: React.HTMLAttributes<HTMLElement>)
             </a>
             . Illustrations by{' '}
             <a
-              href="https://popsy.co"
+              href="https://popsy.co/illustrations"
               target="_blank"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"

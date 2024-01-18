@@ -21,7 +21,11 @@ Resources:
       ClientName: ${self:service}-user-pool-client-${sls:stage}
       UserPoolId: !Ref CognitoUserPool
       ExplicitAuthFlows:
-        - ADMIN_NO_SRP_AUTH
+        - USER_PASSWORD_AUTH
       # AccessTokenValidity: 5
       # IdTokenValidity: 5
       GenerateSecret: false
+
+Outputs:
+  CognitoUserPoolClientId:
+    Value: !Ref CognitoUserPoolClient

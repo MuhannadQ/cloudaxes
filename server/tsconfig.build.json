@@ -3,22 +3,23 @@
     "module": "commonjs",
     "target": "es2020",
     "moduleResolution": "node",
+
+    "strict": true,
+    "skipLibCheck": true,
+    "preserveConstEnums": true,
+
     // "rootDir": "./",
     // The rootDir option cannot be overwritten. "serverless-plugin-typescript"
     // The outDir option has to be set. "serverless-plugin-typescript"
     "outDir": ".build",
     "sourceMap": true,
-    "preserveConstEnums": true,
     "composite": true, // for referencing from client to work
     "declaration": true, // this defaults to true when composite is true
 
     "baseUrl": "./",
     "paths": {
       "src/*": ["src/*"]
-    },
-    "strict": true,
-    "skipLibCheck": true,
-    "allowJs": false
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "tests"]

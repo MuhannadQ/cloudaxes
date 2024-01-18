@@ -1,0 +1,24 @@
+# Should test this later instead of creating the authorizer on the serverless provider.httpApi
+# Resources:
+#   # V2
+#   # The Api Gateway itself is created by serverless
+#   #
+#   ApiGatewayAuthorizer:
+#     Type: AWS::ApiGatewayV2::Authorizer
+#     Properties:
+#       Name: ${self:service}-authorizer-${sls:stage}
+#       AuthorizerType: JWT
+#       ApiId: !Ref HttpApi
+#       IdentitySource:
+#         - $request.header.Authorization
+#       JwtConfiguration:
+#         Audience:
+#           - !Ref CognitoUserPoolClient
+#         Issuer: !GetAtt CognitoUserPool.ProviderURL
+#         # Same as:
+#         # !Join
+#         #   - ''
+#         #   - - 'https://cognito-idp.'
+#         #     - ${aws:region}
+#         #     - '.amazonaws.com/'
+#         #     - !Ref CognitoUserPool

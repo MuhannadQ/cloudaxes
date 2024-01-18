@@ -10,7 +10,8 @@
     "lint:fix": "eslint . --ext .ts --fix",
     "build:client": "npm run --prefix ../client build",
     "sync:client": "serverless s3sync",
-    "deploy:server": "serverless deploy --nos3sync",
+    "deploy:server": "serverless deploy --nos3sync --verbose",
+    "force:deploy:server": "serverless deploy --nos3sync --verbose --force",
     "deploy:client": "npm run build:client && npm run sync:client",
     "deploy": "npm run build:client && serverless deploy"
   },

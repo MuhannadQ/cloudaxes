@@ -20,9 +20,8 @@ provider:
   timeout: 15 # default is 6
   profile: ${opt:aws-profile, env:AWS_PROFILE, 'default'}
   region: ${opt:region, env:REGION}
-  stage: ${opt:stage, env:STAGE, 'dev'}
   environment:
-    NODE_ENV: ${sls:stage}
+    NODE_ENV: ${env:NODE_ENV, 'development'}
     REGION: ${aws:region}
   httpApi:
     cors: true

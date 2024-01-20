@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "test": "vitest",
-    "dev": "serverless offline",
+    "dev": "serverless offline --noAuth",
     "start:func": "serverless invoke local --function trpc",
     "ts:check": "tsc --noEmit",
     "lint": "eslint . --ext ts",
@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "@aws-sdk/client-ec2": "^3.489.0",
-    "@faker-js/faker": "^8.3.1",
     "@trpc/server": "^11.0.0-next-beta.193",
     "zod": "^3.22.2"
   }

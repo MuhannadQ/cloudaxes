@@ -6,18 +6,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-
-import { labels } from '@/data/ec2'
-import { Task } from '@/types'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -26,7 +18,7 @@ interface DataTableRowActionsProps<TData> {
 export default function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const rowLabel = (row.original as Task).label // TODO: fix this
+  const handleDelete = () => console.log('Fake Delete:', row.original)
 
   return (
     <DropdownMenu>
@@ -40,7 +32,7 @@ export default function DataTableRowActions<TData>({
         <DropdownMenuItem>Edit</DropdownMenuItem>
         <DropdownMenuItem>Make a copy</DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem>
-        <DropdownMenuSeparator />
+        {/* <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
@@ -52,9 +44,9 @@ export default function DataTableRowActions<TData>({
               ))}
             </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        </DropdownMenuSub> */}
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleDelete}>
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>

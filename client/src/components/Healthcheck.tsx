@@ -1,4 +1,4 @@
-import { TRPC_API_URL, trpc } from '@/lib/trpc'
+import { TRPC_API_URL, getErrorMessage, trpc } from '@/lib/trpc'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -14,15 +14,6 @@ import { Badge } from '@/components/ui/badge'
 import Icons from '@/components/Icons'
 
 export default function Healthcheck() {
-  const hcQuery = trpc.healthcheck.useQuery()
-  let errorMessage = ''
-  if (hcQuery.isError) {
-    if (hcQuery.error.data?.code) {
-      errorMessage = hcQuery.error.message
-    } else {
-      errorMessage = 'No connection to server' // 'hcQuery.error.message' is "Failed to fetch"
-    }
-  }
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -38,15 +29,7 @@ export default function Healthcheck() {
             <code>trpc.healthcheck.useQuery()</code> returned:
           </DialogDescription>
         </DialogHeader>
-        <div>
-          {hcQuery.isLoading ? (
-            'Loading...'
-          ) : (
-            <Badge variant={errorMessage ? 'destructive' : 'default'}>
-              {errorMessage || hcQuery.data}
-            </Badge>
-          )}
-        </div>
+        <HealthcheckStatus />
         <div className="flex items-center space-x-2">
           <div className="grid flex-1 gap-2">
             <Label htmlFor="link" className="sr-only">
@@ -61,5 +44,21 @@ export default function Healthcheck() {
         </div>
       </DialogContent>
     </Dialog>
+  )
+}
+
+const HealthcheckStatus = () => {
+  const { isLoading, isError, error, data } = trpc.healthcheck.useQuery()
+
+  const errorMessage = isError ? getErrorMessage(error) : ''
+
+  if (isLoading) return 'Loading...'
+
+  return (
+    <div>
+      <Badge variant={errorMessage ? 'destructive' : 'default'}>
+        {errorMessage || data}
+      </Badge>
+    </div>
   )
 }

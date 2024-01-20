@@ -4,7 +4,7 @@ import { Table } from '@tanstack/react-table'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-import { priorities, statuses } from '@/data/ec2'
+import { instanceTypes, regions, stateNames } from '@/data/ec2'
 
 import DataTableViewOptions from './DataTableViewOptions'
 import DataTableFacetedFilter from './DataTableFacetedFilter'
@@ -20,25 +20,32 @@ export default function DataTableToolbar<TData>({ table }: DataTableToolbarProps
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter tasks..."
-          value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}
+          placeholder="Filter instances..."
+          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('title')?.setFilterValue(event.target.value)
+            table.getColumn('name')?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn('status') && (
+        {table.getColumn('type') && (
           <DataTableFacetedFilter
-            column={table.getColumn('status')}
-            title="Status"
-            options={statuses}
+            column={table.getColumn('type')}
+            title="Instance Type"
+            options={instanceTypes}
           />
         )}
-        {table.getColumn('priority') && (
+        {table.getColumn('state') && (
           <DataTableFacetedFilter
-            column={table.getColumn('priority')}
-            title="Priority"
-            options={priorities}
+            column={table.getColumn('state')}
+            title="State"
+            options={stateNames}
+          />
+        )}
+        {table.getColumn('az') && (
+          <DataTableFacetedFilter
+            column={table.getColumn('az')}
+            title="Region"
+            options={regions}
           />
         )}
         {isFiltered && (

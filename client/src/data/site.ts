@@ -12,6 +12,5 @@ export const siteConfig = {
 export const pages = [
   { path: '/', title: 'Overview' },
   { path: '/ec2', title: 'EC2' },
-  { path: '/products', title: 'Products' },
   { path: '/settings', title: 'Settings' },
 ] as const

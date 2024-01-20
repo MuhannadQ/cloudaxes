@@ -159,8 +159,7 @@ function handleCognitoError(error: unknown) {
   if (error instanceof CognitoIdentityProviderServiceException) {
     console.error('Cognito Error:', error)
     return error.name
-  } else {
-    console.error(error)
-    return 'Unknown Error'
   }
+  console.error(error)
+  return 'Unknown Error'
 }

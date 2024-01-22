@@ -122,7 +122,7 @@ To use a custom domain with CloudFront, follow these steps:
 
 ## Development and Testing
 
-Cloudaxes uses TRPC for server and client communication which provides end-to-end typesafety while developing.
+Cloudaxes uses tRPC for server and client communication which provides end-to-end typesafety while developing.
 
 For local development run `npm run dev` in the server or client.
 `npm run dev` in the server simulates serverless offline without authorization.

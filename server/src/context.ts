@@ -4,6 +4,7 @@ import type { CreateAWSLambdaContextOptions } from '@trpc/server/adapters/aws-la
 export interface ISession {
   user: {
     id: string
+    authorized: boolean
   }
 }
 
@@ -15,9 +16,10 @@ export const createContext = async ({
   context,
 }: CreateAWSLambdaContextOptions<APIGatewayProxyEventV2>): Promise<Context> => {
   return {
-    session: fakeSession,
+    session: mockAuthorizedSession,
   }
 }
+
 interface CreateContextOptions {
   session: ISession | null
 }
@@ -26,8 +28,16 @@ export async function createContextInner(_opts: CreateContextOptions) {
   return _opts
 }
 
-const fakeSession = {
+export const mockAuthorizedSession = {
   user: {
-    id: '123123',
+    id: 'user_123',
+    authorized: true,
+  },
+}
+
+export const mockUnauthorizedSession = {
+  user: {
+    id: 'user_123',
+    authorized: false,
   },
 }

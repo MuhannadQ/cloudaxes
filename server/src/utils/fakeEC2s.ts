@@ -2,7 +2,14 @@ import type { Instance } from '@aws-sdk/client-ec2'
 
 import type { AWSEC2Instance } from 'src/schema'
 
-const fakeEC2s: Instance[] = [
+export const FAKE_COUNT = {
+  all: 100,
+  running: 20,
+  t2micro: 33,
+  running_t2micro: 5,
+} as const
+
+export const fakeEc2s: Instance[] = [
   {
     InstanceId: 'i-a588782',
     InstanceType: 't2.micro',
@@ -1004,5 +1011,3 @@ const fakeEC2s: Instance[] = [
     Tags: [],
   },
 ] satisfies AWSEC2Instance[]
-
-export default fakeEC2s

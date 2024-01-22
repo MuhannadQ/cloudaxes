@@ -20,7 +20,7 @@ const client = new EC2Client({
 // 2. If you do not specify instance IDs or filters, the output includes information for all instances
 
 export async function getEC2InstancesCount(): Promise<number> {
-  // probably not the best implementation. I added it to use it for the frontend table total row count
+  // probably not the best implementation. I added it for frontend use only, for table total row count
   const { instances } = await describeInstances({})
   return instances.length
 }
@@ -46,10 +46,10 @@ export async function listEC2Instances(
   page: Paginate
 ): Promise<{ instances: EC2Instance[]; nextToken: string | null }> {
   const params: DescribeInstancesCommandInput = {
-    // Can use query for filtering
-    // Filters: [
-    //   { Name: 'instance-state-name', Values: ['running'] },
-    // ],
+    Filters: [
+      ...(query.state ? [{ Name: 'instance-state-name', Values: [query.state] }] : []),
+      ...(query.type ? [{ Name: 'instance-type', Values: [query.type] }] : []),
+    ],
     MaxResults: page.size ?? EC2_LIST_LIMIT,
     NextToken: page.nextToken,
   }

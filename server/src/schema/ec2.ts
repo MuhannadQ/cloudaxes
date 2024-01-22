@@ -19,8 +19,8 @@ export const EC2KeySchema = EC2InstanceSchema.pick({
 
 export const EC2QuerySchema = EC2InstanceSchema.pick({
   type: true,
-  name: true,
   state: true,
+  // name: true,
 }).partial()
 
 export type EC2Instance = z.infer<typeof EC2InstanceSchema>

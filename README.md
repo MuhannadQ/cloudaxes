@@ -64,7 +64,7 @@ npm install
 ### Configuration (environment variables)
 
 Create `.env` file in the `client` folder.
-Use values from the output of the server deployment. Currently you can't use `.env.{stage}` files here **directly** like in the server, so you need to change `.env` for each stage when deploying. It can be done with [Vite modes](https://vitejs.dev/guide/env-and-mode#env-files) but it requires some changes in the scripts.
+Use values from the output of the server deployment. Currently you can't use `.env.{stage}` files here **directly** like in the server, so you need to modify `.env` for each stage when deploying. It can be done with [Vite modes](https://vitejs.dev/guide/env-and-mode#env-files) but it requires some changes in the scripts.
 
 Refer to `.env.template` in the `client` folder for details.
 
@@ -138,7 +138,7 @@ To use a custom domain with CloudFront, follow these steps:
 
 ## Development and Testing
 
-Cloudaxes uses tRPC for server and client communication which provides end-to-end typesafety while developing.
+Cloudaxes uses **tRPC** for server and client communication which provides end-to-end typesafety while developing.
 
 For local development run `npm run dev` in the server or client.
 `npm run dev` in the server simulates serverless offline without authorization.

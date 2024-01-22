@@ -13,6 +13,6 @@ export default function DashboardRoutesGuard() {
       <Outlet />
     </DashboardLayout>
   ) : (
-    <Navigate to="/login" />
+    <Navigate to="/login" replace={true} />
   )
 }

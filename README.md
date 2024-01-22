@@ -32,7 +32,9 @@ npm install
 
 ### Configuration (environment variables)
 
-Create `.env` file in the `server` folder. Refer to `.env.template` in the `server` folder for details.
+Create a `.env` or `.env.{stage}` file in the `server` folder. See [Resolution of environment variables in serverless framework](https://www.serverless.com/framework/docs/environment-variables) for more details about setting up environment variables for a specific deployment stage.
+
+Refer to `.env.template` in the `server` folder for details.
 
 ### Deployment
 
@@ -40,6 +42,12 @@ Run server deployment script to build and deploy the backend infrastructure to A
 
 ```bash
 npm run deploy:server
+```
+
+Which deploys to the `dev` stage. You can specify the stage like this:
+
+```bash
+npm run deploy:server -- --stage <stage>
 ```
 
 Successful deployment outputs values that we need for the client configuration.
@@ -56,15 +64,23 @@ npm install
 ### Configuration (environment variables)
 
 Create `.env` file in the `client` folder.
-Use values from the output of the server deployment. Refer to `.env.template` in the `client` folder for details.
+Use values from the output of the server deployment. Currently you can't use `.env.{stage}` files here **directly** like in the server, so you need to change `.env` for each stage when deploying. It can be done with [Vite modes](https://vitejs.dev/guide/env-and-mode#env-files) but it requires some changes in the scripts.
+
+Refer to `.env.template` in the `client` folder for details.
 
 ### Deployment
 
 Run client deployment script to build and deploy the frontend to AWS S3.
 Ensure that the server is deployed first.
 
+**Notice:** Make sure you deploy the client to the same stage as the server.
+
 ```bash
 npm run deploy:client
+```
+
+```bash
+npm run deploy:client -- --stage <stage>
 ```
 
 ---
@@ -73,13 +89,13 @@ npm run deploy:client
 
 After setting up the project for the first time, the initial deployment for each stage can be a bit involved. However, subsequent deployments to the same stage can be simplified.
 
-You can deploy both server and client together using `npm run deploy`, this would work only after the initial deployment to the same stage since client was already configured in the first one.
+You can deploy both server and client together using `npm run deploy` (`npm run deploy -- --stage <stage>`), this would work only after the initial deployment to the same stage since client was already configured in the first one.
 
 You can deploy the server only, using `npm run deploy:server` to deploy changes in the backend code or AWS resources.
 
 You can deploy the client only, using `npm run deploy:client` to deploy frontend changes quickly to the hosting S3 bucket (Skipping server deployment).
 
-If needed you can **build** and **sync** the frontend separately, using `npm run build:client` _then_ `npm run sync:client` only when you need to update the hosting S3 bucket.
+If needed you can **build** and **sync** the frontend separately, using `npm run build:client` _then_ `npm run sync:client` (`npm run sync:client -- --stage <stage>`) only when you need to update the hosting S3 bucket.
 
 ---
 
@@ -87,7 +103,7 @@ If needed you can **build** and **sync** the frontend separately, using `npm run
 
 You can access the web app in 2 ways:
 
-1. via the cloudfront CDN: using the cloudfront domain name `Cloudfront` from the server deployment outputs, or using an [alternate domain name](#setting-up-alternate-domain-for-cloudfront) if you provided one.
+1. via the cloudfront CDN: using the cloudfront domain name `CloudFrontDistributionDomainName` from the server deployment outputs, or using an [alternate domain name](#setting-up-alternate-domain-for-cloudfront) if you provided one.
 2. by accessing the hosting s3 bucket directly: using the s3 bucket website url `AppBucketWebsiteURL` from the server deployment outputs.
 
 Cloudaxes leverages Cognito for authentication and authorization. It is invite-only; users need to be created in the Cognito AWS console by the admin.

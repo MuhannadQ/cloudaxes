@@ -32,3 +32,7 @@ Resources:
             SslSupportMethod: sni-only
             # MinimumProtocolVersion: _ # I didn't set this, it defaulted to TLSv1
           - CloudFrontDefaultCertificate: true
+
+Outputs:
+  CloudFrontDistributionDomainName:
+    Value: !GetAtt CloudFrontDistribution.DomainName

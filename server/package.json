@@ -12,7 +12,7 @@
     "sync:client": "serverless s3sync",
     "deploy:server": "serverless deploy --nos3sync --verbose",
     "force:deploy:server": "serverless deploy --nos3sync --verbose --force",
-    "deploy:client": "npm run build:client && npm run sync:client",
+    "deploy:client": "npm run build:client && serverless s3sync",
     "deploy": "npm run build:client && serverless deploy"
   },
   "devDependencies": {

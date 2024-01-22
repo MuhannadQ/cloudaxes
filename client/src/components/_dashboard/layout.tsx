@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 }
 
 const Blank = () => (
-  <div className="flex h-full items-center justify-center bg-blue-50 sm:hidden">
+  <div className="flex h-dvh items-center justify-center bg-blue-50 sm:hidden">
     <h2 className="text-xl">Viewport is too small!</h2>
   </div>
 )
